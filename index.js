@@ -52,6 +52,7 @@ Crawler.prototype = {
     if (typeof args[1] != 'undefined' && arguments[1]) {
       if (_.isFunction(args[1])) {
         callback = args[1];
+        options = {};
       } else if (_.isPlainObject(arguments[1])) {
         options = args[1];
       } else {
