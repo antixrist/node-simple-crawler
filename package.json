@@ -21,7 +21,7 @@
     "email": "ya.antixrist@gmail.com",
     "url": "antixrist.ru"
   },
-  "license": "WTFPLv2",
+  "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/antixrist/node-simple-crawler/issues"
   },
