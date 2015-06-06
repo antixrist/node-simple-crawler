@@ -1,0 +1,39 @@
+{
+  "name": "node-simple-crawler",
+  "version": "0.1.0",
+  "description": "Simple web-crawler for nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/antixrist/node-simple-crawler.git"
+  },
+  "keywords": [
+    "spider",
+    "crawler",
+    "grabber",
+    "parser"
+  ],
+  "author": {
+    "name": "antixrist",
+    "email": "ya.antixrist@gmail.com",
+    "url": "antixrist.ru"
+  },
+  "license": "WTFPLv2",
+  "bugs": {
+    "url": "https://github.com/antixrist/node-simple-crawler/issues"
+  },
+  "homepage": "https://github.com/antixrist/node-simple-crawler",
+  "dependencies": {
+    "request": "~2.57.0",
+    "encoding": "~0.1.11",
+    "charset": "~1.0.0",
+    "jschardet": "~1.1.1",
+    "extend": "~2.0.1",
+    "url": "~0.10.3",
+    "lodash": "~3.9.3",
+    "cheerio": "~0.19.0"
+  }
+}
