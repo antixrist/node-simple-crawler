@@ -5,7 +5,9 @@ var Request = require('request'),
     Extend = require('extend'),
     Url = require('url'),
     _ = require('lodash'),
-    Cheerio = require('cheerio');
+    Cheerio = require('cheerio'),
+
+    Document = require('document');
 
 var callbackDefault = function (err) {
   if (err) { throw err; }
@@ -106,18 +108,22 @@ Crawler.prototype = {
 
     options = this._getOptions(options);
 
-    Request(Extend(options.request, {url: url}), function(err, response, body) {
-      var $;
-      if (err) {
-        this._log('Error', url);
-        return callback.call(this, err, url);
-      } else {
-        response.body = this._convert(response, body);
-        $ = Cheerio.load(response.body);
-        callback.call(this, null, url, response, $);
-        this._loadFinished(url);
-      }
-    }.bind(this));
+    Request(Extend(options.request, {url: url}), (function (url) {
+      return function(err, response, body) {
+        var document;
+        if (err) {
+          this._log('Error', url);
+          return callback(err, url);
+        } else {
+          response.body = this._convert(response, body);
+          document = new Document(url, response);
+          process.nextTick(function () {
+            callback(null, url, document);
+          });
+          this._loadFinished(url);
+        }
+      }.bind(this);
+    })(url));
   },
 
   _convert: function (response, body) {
@@ -157,10 +163,14 @@ Crawler.prototype = {
 
   _dequeue: function() {
     var next = this.pending.shift();
+    var callback = this.callback;
+    var visited = this.visited;
     if (next) {
       this._load(next.url, next.options, next.callback);
     } else if (this.active.length === 0) {
-      this.callback.call(this, null, this.visited);
+      process.nextTick(function () {
+        callback(null, visited);
+      });
     }
   },
 
