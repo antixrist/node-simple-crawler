@@ -16,8 +16,9 @@ var crawler = new Crawler({
   request: { // config for 'request' package
     headers: { 'user-agent': 'node-crawler' },
   },
+  // If defined 'decodeTo' and not 'decodeFrom' then charset of 'response.body' will be detected automatically
   decodeTo: 'utf8',
-  decodeFrom: '', // e.g. 'win-1251'. If defined 'encodeTo' and not 'encodeFrom' then charset of 'response.body' will be detected automatically
+  decodeFrom: '', // e.g. 'win-1251'
   callback: function (err, visited) {
     if (err) { throw err; }
 
@@ -38,7 +39,7 @@ var handleRequest = function (err, url, response, $) {
 
   console.log(url);
   console.log(response); // response object
-  
+
   $('a').each(function(index, node) { // cheerio
     var $node = $(node);
     var href = $node.attr('href').split('#')[0];
