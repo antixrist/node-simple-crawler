@@ -7,7 +7,7 @@ var Request = require('request'),
     _ = require('lodash'),
     Cheerio = require('cheerio'),
 
-    Document = require('document');
+    Document = require('./lib/document');
 
 var callbackDefault = function (err) {
   if (err) { throw err; }
