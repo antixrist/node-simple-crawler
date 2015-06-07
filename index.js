@@ -108,7 +108,7 @@ Crawler.prototype = {
 
     options = this._getOptions(options);
 
-    Request(Extend(options.request, {url: url}), (function (url) {
+    Request(Extend(options.request, {url: url}), (function (context, url) {
       return function(err, response, body) {
         var document;
         if (err) {
@@ -122,8 +122,8 @@ Crawler.prototype = {
           });
           this._loadFinished(url);
         }
-      }.bind(this);
-    })(url));
+      }.bind(context);
+    })(this, url));
   },
 
   _convert: function (response, body) {
