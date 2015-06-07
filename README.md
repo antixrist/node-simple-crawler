@@ -3,8 +3,9 @@ Simple web-crawler for node.js
 
 # Installation
 Using npm:
-
+```
 $ npm install node-simple-crawler
+```
 
 # Usage
 ```js
