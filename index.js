@@ -17,8 +17,8 @@ var _defaults = {
   request: {
     encoding: 'binary'
   },
-  encodeTo: 'utf8',
-  encodeFrom: ''
+  decodeTo: 'utf8',
+  decodeFrom: ''
 };
 
 function Crawler(_options, callback) {
@@ -92,6 +92,10 @@ Crawler.prototype = {
     this.pending = [];
   },
 
+  resolve: function (base, url) {
+    return Url.resolve(base, url);
+  },
+
   _getOptions: function (_options) {
     return Extend(true, {}, this.options, _options || {});
   },
@@ -117,19 +121,19 @@ Crawler.prototype = {
   },
 
   _convert: function (response, body) {
-    var bodyBufConverted, encodeFrom, encodeTo, bodyBuffer;
+    var bodyBufConverted, decodeFrom, decodeTo, bodyBuffer;
     var data = response.body || '';
 
-    if (data && this.options.encodeTo && this.options.request.encoding && this.options.request.encoding == 'binary') {
-      encodeTo = this.options.encodeTo;
-      encodeFrom = this.options.encodeFrom;
+    if (data && this.options.decodeTo && this.options.request.encoding && this.options.request.encoding == 'binary') {
+      decodeTo = this.options.decodeTo;
+      decodeFrom = this.options.decodeFrom;
       bodyBuffer = new Buffer(body, 'binary');
 
-      if (!encodeFrom) {
-        encodeFrom = Charset(response.headers, bodyBuffer) || Jschardet.detect(body).encoding.toLowerCase();
+      if (!decodeFrom) {
+        decodeFrom = Charset(response.headers, bodyBuffer) || Jschardet.detect(body).encoding.toLowerCase();
       }
 
-      bodyBufConverted = Encoding.convert(bodyBuffer, encodeTo, encodeFrom);
+      bodyBufConverted = Encoding.convert(bodyBuffer, decodeTo, decodeFrom);
       data = bodyBufConverted.toString();
     }
 
