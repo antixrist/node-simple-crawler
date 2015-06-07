@@ -44,7 +44,7 @@ var handleRequest = function (err, url, response, $) {
     var $node = $(node);
     var href = $node.attr('href').split('#')[0];
 
-    spider.queue(that.resolve(url, href), handleRequest);
+    crawler.queue(that.resolve(url, href), handleRequest);
   });
 };
 
