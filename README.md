@@ -1,30 +1,30 @@
 # node-simple-crawler
-Simple web-crawler for nodejs
+Simple web-crawler for node.js
 
 # Installation
 Using npm:
 
-		$ npm install node-spider
+$ npm install node-simple-crawler
 
 # Usage
 ```js
 var Crawler = require('node-simple-crawler');
 
 var crawler = new Crawler({
-	concurrent: 5,
-	logs: true,
-	request: { // config for 'request' package
-	  headers: { 'user-agent': 'node-crawler' },
-	},
+  concurrent: 5,
+  logs: true,
+  request: { // config for 'request' package
+    headers: { 'user-agent': 'node-crawler' },
+  },
   decodeTo: 'utf8',
   decodeFrom: '', // e.g. 'win-1251'. If defined 'encodeTo' and not 'encodeFrom' then charset of 'response.body' will be detected automatically
-	callback: function (err, visited) {
-	  if (err) { throw err; }
+  callback: function (err, visited) {
+    if (err) { throw err; }
 
-	  // all requests are done
-	  console.log('Done! Visited links:');
-	  console.log(visited);
-	}
+    // all requests are done
+    console.log('Done! Visited links:');
+    console.log(visited);
+  }
 });
 
 var handleRequest = function (err, url, response, $) {
@@ -36,14 +36,15 @@ var handleRequest = function (err, url, response, $) {
 
   var that = this;
 
-	console.log(response); // response object
-	console.log(url);
-	$('a').each(function(index, node) { // cheerio
-	  var $node = $(node);
-		var href = $node.attr('href').split('#')[0];
+  console.log(url);
+  console.log(response); // response object
+  
+  $('a').each(function(index, node) { // cheerio
+    var $node = $(node);
+    var href = $node.attr('href').split('#')[0];
 
-		spider.queue(that.resolve(url, href), handleRequest);
-	});
+    spider.queue(that.resolve(url, href), handleRequest);
+  });
 };
 
 crawler.queue('http://google.com/', handleRequest);
