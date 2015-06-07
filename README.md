@@ -33,8 +33,8 @@ var handleRequest = function (err, url, response, $) {
     console.log('Error url: '+ url);
     throw err;
   }
-  // request done
 
+  // request done
   var that = this;
 
   console.log(url);
