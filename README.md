@@ -29,7 +29,7 @@ var crawler = new Crawler({
   }
 });
 
-var handleRequest = function (err, url, response, $) {
+var handleRequest = function (err, url, document) {
   if (err) {
     console.log('Error url: '+ url);
     throw err;
@@ -39,9 +39,10 @@ var handleRequest = function (err, url, response, $) {
   var that = this;
 
   console.log(url);
-  console.log(response); // response object
+  console.log(document); // document object
 
-  $('a').each(function(index, node) { // cheerio
+  var $ = document.$; // cheerio
+  $('a').each(function(index, node) {
     var $node = $(node);
     var href = $node.attr('href').split('#')[0];
 
